@@ -4,7 +4,9 @@ public class StringParser : IStringParser
 {
     public Person? ParsePersonFromString(string input)
     {
-        var nameParts = input.Split(' ');
+        if (string.IsNullOrWhiteSpace(input)) return null;
+        
+        var nameParts = input.Trim().Split(' ');
         string givenNames;
         var surname = string.Empty;
         
