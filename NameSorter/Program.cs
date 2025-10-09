@@ -1,9 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Collections;
 using NameSorter;
 
 IFileReader fileReader;
 IStringParser stringParser;
+IFileContentParser fileContentParser;
 
 var argsCount = args.Length;
 if (argsCount == 1)
@@ -19,16 +21,12 @@ if (argsCount == 1)
     }
     
     stringParser = new StringParser();
-    var namesList = new List<string>();
-    foreach (var fileLine in fileContents)
+    fileContentParser = new FileContentParser(stringParser);
+    var people = fileContentParser.ParseContent(fileContents);
+
+    foreach (var person in people)
     {
-        var parsedName = stringParser.ParsePersonFromString(fileLine);
-        if(parsedName != null) namesList.Add(parsedName.ToString());
-    }
-    
-    foreach (var name in namesList)
-    {
-        Console.WriteLine(name);
+        Console.WriteLine(person.ToString());
     }
 }
 else
