@@ -3,6 +3,7 @@
 using NameSorter;
 
 IFileReader fileReader;
+IStringParser stringParser;
 
 var argsCount = args.Length;
 if (argsCount == 1)
@@ -17,7 +18,18 @@ if (argsCount == 1)
         Environment.Exit(1);
     }
     
-    Array.ForEach(fileContents, Console.WriteLine);
+    stringParser = new StringParser();
+    var namesList = new List<string>();
+    foreach (var fileLine in fileContents)
+    {
+        var parsedName = stringParser.ParsePersonFromString(fileLine);
+        if(parsedName != null) namesList.Add(parsedName.ToString());
+    }
+    
+    foreach (var name in namesList)
+    {
+        Console.WriteLine(name);
+    }
 }
 else
 {
