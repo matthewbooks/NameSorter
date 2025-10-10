@@ -6,6 +6,7 @@ using NameSorter;
 IFileReader fileReader;
 IStringParser stringParser;
 IFileContentParser fileContentParser;
+IPersonSorter personSorter;
 
 var argsCount = args.Length;
 if (argsCount == 1)
@@ -24,7 +25,10 @@ if (argsCount == 1)
     fileContentParser = new FileContentParser(stringParser);
     var people = fileContentParser.ParseContent(fileContents);
 
-    foreach (var person in people)
+    personSorter = new PersonSorter();
+    var sortedPeople = personSorter.Sort(people);
+    
+    foreach (var person in sortedPeople)
     {
         Console.WriteLine(person.ToString());
     }
